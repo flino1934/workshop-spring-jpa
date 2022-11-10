@@ -10,14 +10,13 @@ import com.lino.course.model.entities.User;
 @RestController
 @RequestMapping(value = "/users")
 public class UserResource {
-	
-	
+
 	@GetMapping
-	public ResponseEntity<User> findAll(){
-		
-		User u = new User(1L, "Maria", "Maria@gmail.com", "12345");
+	public ResponseEntity<User> findAll() {
+
+		User u = new User(1L, "Maria", "Maria@gmail.com", "12345", "1234");
 		return ResponseEntity.ok().body(u);
-		
+
 	}
 
 }

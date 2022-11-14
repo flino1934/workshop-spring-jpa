@@ -2,7 +2,6 @@ package com.lino.course.model.entities;
 
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
 import java.util.Set;
 
@@ -10,8 +9,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Entity
 @Table(name = "tb_product")
@@ -28,7 +29,10 @@ public class Product implements Serializable {
 	private String imgUrl;
 
 	// Vai ser um set para não repetir a categoria mais de uma vez
-	@Transient
+	@ManyToMany
+	@JoinTable(name = "tb_product_category", joinColumns = 
+	@JoinColumn(name = "product_id"),
+	inverseJoinColumns = @JoinColumn(name = "category_id"))
 	private Set<Category> categories = new HashSet<>();
 
 	public Product() {

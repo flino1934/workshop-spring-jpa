@@ -105,7 +105,7 @@ public class Order implements Serializable {
 		this.payment = payment;
 	}
 	
-	public Double getTotal() {
+	public Double getTotal() {//começa com get Para sair no Json
 
 		double sum = 0.0;
 

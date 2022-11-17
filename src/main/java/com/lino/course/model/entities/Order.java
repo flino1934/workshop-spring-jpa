@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -30,15 +32,18 @@ public class Order implements Serializable {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd@HH:mm:ss'Z'", timezone = "GMT")
 	private Instant moment;
 	private Integer status;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "clientId")
 	private User client;
 
-	//Set para não repetir os pedidos
-	//um para muitos, um pedido tem tem muitas ordens de pedido
-	@OneToMany(mappedBy = "id.order")//passou id.order pois o id tem tem o order
+	// Set para não repetir os pedidos
+	// um para muitos, um pedido tem tem muitas ordens de pedido
+	@OneToMany(mappedBy = "id.order") // passou id.order pois o id tem tem o order
 	private Set<OrderItem> items = new HashSet<>();
+
+	@OneToOne(mappedBy = "order", cascade = CascadeType.ALL)//estamos mapeando as duas entidades para terem os mesmos id's
+	private Payment payment;
 
 	public Order() {
 		// TODO Auto-generated constructor stub
@@ -89,6 +94,14 @@ public class Order implements Serializable {
 
 	public Set<OrderItem> getItems() {
 		return items;
+	}
+
+	public Payment getPayment() {
+		return payment;
+	}
+
+	public void setPayment(Payment payment) {
+		this.payment = payment;
 	}
 
 	@Override
